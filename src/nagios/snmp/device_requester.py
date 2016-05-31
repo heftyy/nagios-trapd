@@ -1,6 +1,6 @@
 import requests
 import re
-import json
+import simplejson as json
 from nagios.snmp.log import log
 
 
