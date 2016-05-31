@@ -19,8 +19,4 @@ script: make deb
 
 # setup notifications
 notifications:
-  irc:
-    channels: "irc.freenode.org#cloudant-dev"
-    on_success: change
-    on_failure: change
   email: false
