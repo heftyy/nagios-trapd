@@ -1,16 +1,11 @@
-import os
-import sys
 import unittest
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
-
-from sensu.snmp.mib import MibResolver
+from nagios.snmp.mib import MibResolver
 
 # helpers
-from helpers.log import log
+
 
 class MibResolverTestCase(unittest.TestCase):
-
     def setUp(self):
         self.mibs = MibResolver()
 
@@ -33,7 +28,8 @@ class MibResolverTestCase(unittest.TestCase):
 
     def test_lookup_oid_unknown(self):
         unknown_oid = (1, 2, 3, 4, 5, 6)
-        #self.assertRaises(NoSuchObjectError, self.mibs.lookup_oid, unknown_oid)
+        # self.assertRaises(NoSuchObjectError, self.mibs.lookup_oid, unknown_oid)
+
 
 if __name__ == "__main__":
     unittest.main()

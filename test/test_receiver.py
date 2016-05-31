@@ -1,49 +1,43 @@
-import time
-import os
-import sys
-import unittest
 import logging
-from mock import Mock
-from mock import patch
+import time
+import unittest
 
-from pysnmp.entity.rfc3413.oneliner import ntforg
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
-
-from sensu.snmp.mib import MibResolver
-from sensu.snmp.receiver import TrapReceiverThread
+from nagios.snmp.mib import MibResolver
+from nagios.snmp.receiver import TrapReceiverThread
 
 # helpers
 from helpers.log import log, configure_log
 
-class TrapReceiverTestCase(unittest.TestCase):
+from pysnmp.entity.rfc3413.oneliner import ntforg
 
+
+class TrapReceiverTestCase(unittest.TestCase):
     def setUp(self):
         self.config = {
-                "snmp": {
-                    "transport": {
-                        "listen_address": "127.0.0.1",
-                        "listen_port": 1620,
-                        "udp": {
-                            "enabled": True
-                        },
-                        "tcp": {
-                            "enabled": False 
-                        }
+            "snmp": {
+                "transport": {
+                    "listen_address": "127.0.0.1",
+                    "listen_port": 1620,
+                    "udp": {
+                        "enabled": True
                     },
-                    "auth": {
-                        "version2": {
-                            "community": "public",
-                            "enabled": True
-                        },
-                        "version3": {
-                            "enabled": True,
-                            "users": {
-                            }
+                    "tcp": {
+                        "enabled": False
+                    }
+                },
+                "auth": {
+                    "version2": {
+                        "community": "public",
+                        "enabled": True
+                    },
+                    "version3": {
+                        "enabled": True,
+                        "users": {
                         }
                     }
                 }
             }
+        }
         self.mibs = MibResolver()
         self.traps = []
         self.trap_receiver_thread = TrapReceiverThread(self.config, self.mibs, self._trap_receiver_callback)
@@ -76,14 +70,14 @@ class TrapReceiverTestCase(unittest.TestCase):
         # Build Tarp Argument List
         varbinds = []
         for varName, val in notification_args.items():
-            varbinds.append( (ntforg.MibVariable(*varName), val) )
+            varbinds.append((ntforg.MibVariable(*varName), val))
 
         # Send Notification
         error = notifier.sendNotification(ntforg.CommunityData(community),
-                    ntforg.UdpTransportTarget((agent_host, agent_port)),
-                    notify_type,
-                    ntforg.MibVariable(*notification_trap),
-                    *varbinds)
+                                          ntforg.UdpTransportTarget((agent_host, agent_port)),
+                                          notify_type,
+                                          ntforg.MibVariable(*notification_trap),
+                                          *varbinds)
 
         # Check if Notification was successfully sent
         if error:
@@ -107,7 +101,7 @@ class TrapReceiverTestCase(unittest.TestCase):
                 for notification_arg_type, val in notification_args.items():
                     notification_arg_oid = self.mibs.lookup(*notification_arg_type)
                     self.assertTrue(notification_arg_oid in trap.arguments)
-                    self.assertTrue(trap.arguments[notification_arg_oid] == val)
+                    self.assertTrue(str(trap.arguments[notification_arg_oid]) == val)
                 result = True
         self.assertTrue(result, "trap not received (yet?)")
 
@@ -117,6 +111,7 @@ class TrapReceiverTestCase(unittest.TestCase):
         # make sure we got it
         self.assertTrapReceived(('SNMPv2-MIB', 'coldStart'), {('SNMPv2-MIB', 'sysName'): "whatup"})
 
+
 if __name__ == "__main__":
-    configure_log(logging.getLogger('sensu-trapd'))
+    configure_log(logging.getLogger('nagios-trapd'))
     unittest.main()

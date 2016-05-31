@@ -1,38 +1,46 @@
 {
-    "cloudant-generic-trap-handler-noargs": {
-        "trap": {
-            "type": ["CLOUDANT-PLATFORM-MIB", "cloudantGenericTrap"]
-        },
-        "event": {
-            "name": "{hostname} Cloudant Generic Event",
-            "output": "{oid}",
-            "handlers": ["debug"],
-            "severity": "CRITICAL"
-        }
+  "if-mib-link-down-trap-handler": {
+    "trap": {
+      "type": [
+        "IF-MIB",
+        "linkDown"
+      ],
+      "args": {
+        "index": [
+          "IF-MIB",
+          "ifIndex"
+        ]
+      }
     },
-    "cloudant-generic-trap-handler": {
-        "trap": {
-            "type": ["CLOUDANT-PLATFORM-MIB", "cloudantGenericTrap"],
-            "args": {
-                "message": ["CLOUDANT-PLATFORM-MIB","cloudantTrapMessage"]
-            }
-        },
-        "event": {
-            "name": "{hostname} Cloudant Generic Event",
-            "output": "{message}",
-            "handlers": ["debug"],
-            "severity": "CRITICAL"
-        }
-    },
-    "cloudant-dbcore-reboot-event-handler": {
-        "trap": {
-            "type": ["CLOUDANT-DBCORE-MIB", "cloudantDbcoreRebootEvent"]
-        },
-        "event": {
-            "name": "{hostname} DBCore Reboot Event",
-            "output": "DBCore on {hostname} was rebooted",
-            "handlers": ["debug"],
-            "severity": "CRITICAL" 
-        }
+    "event": {
+      "name": "{hostname} link down",
+      "output": "{oid}",
+      "handlers": [
+        "snmp_trap"
+      ],
+      "severity": "CRITICAL"
     }
+  },
+  "if-mib-link-up-trap-handler": {
+    "trap": {
+      "type": [
+        "IF-MIB",
+        "linkUp"
+      ],
+      "args": {
+        "first": [
+          "IF-MIB",
+          "ifIndex"
+        ]
+      }
+    },
+    "event": {
+      "name": "{hostname} link up",
+      "output": "{oid}",
+      "handlers": [
+        "snmp_trap"
+      ],
+      "severity": "OK"
+    }
+  }
 }

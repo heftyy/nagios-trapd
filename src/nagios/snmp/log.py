@@ -3,10 +3,11 @@ import logging
 import logging.handlers
 
 # the main log
-log = logging.getLogger('sensu-trapd')
+log = logging.getLogger('nagios-trapd')
 
 # the events log
-events_log = logging.getLogger('sensu-trapd-events')
+events_log = logging.getLogger('nagios-trapd-events')
+
 
 def configure_log(log, log_file, log_level, foreground):
     # Clear existing log handlers
@@ -30,6 +31,7 @@ def configure_log(log, log_file, log_level, foreground):
         streamhandler = logging.StreamHandler(sys.stdout)
         streamhandler.setFormatter(formatter)
         log.addHandler(streamhandler)
+
 
 def configure_events_log(log, log_file):
     # Clear existing log handlers

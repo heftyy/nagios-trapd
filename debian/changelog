@@ -1,4 +1,67 @@
-sensu-trapd (0.2.12) unstable; urgency=low
+nagios-trapd (0.2.29) unstable; urgency=medium
+
+  * Last Commit: (2016-05-30 11:33:23 +0200)
+    bb614dea9fa95bbf874d8cba7d34059fd5d1abb9 szn <sznowik@gawex.pl>
+
+ -- Andy Kipp <akipp@cloudant.com>  Tue, 31 May 2016 08:08:20 +0200
+
+nagios-trapd (0.2.29) unstable; urgency=medium
+
+  * Last Commit: (2016-05-30 11:33:23 +0200)
+    bb614dea9fa95bbf874d8cba7d34059fd5d1abb9 szn <sznowik@gawex.pl>
+
+ -- Andy Kipp <akipp@cloudant.com>  Mon, 30 May 2016 12:25:16 +0200
+
+nagios-trapd (0.2.29) unstable; urgency=medium
+
+  * Last Commit: (2016-05-30 11:33:23 +0200)
+    bb614dea9fa95bbf874d8cba7d34059fd5d1abb9 szn <sznowik@gawex.pl>
+
+ -- Andy Kipp <akipp@cloudant.com>  Mon, 30 May 2016 12:23:42 +0200
+
+nagios-trapd (0.2.29) unstable; urgency=medium
+
+  * Last Commit: (2016-05-30 11:33:23 +0200)
+    bb614dea9fa95bbf874d8cba7d34059fd5d1abb9 szn <sznowik@gawex.pl>
+
+ -- Andy Kipp <akipp@cloudant.com>  Mon, 30 May 2016 12:23:00 +0200
+
+nagios-trapd (0.2.29) unstable; urgency=medium
+
+  * Last Commit: (2016-05-30 11:33:23 +0200)
+    bb614dea9fa95bbf874d8cba7d34059fd5d1abb9 szn <sznowik@gawex.pl>
+
+ -- Andy Kipp <akipp@cloudant.com>  Mon, 30 May 2016 11:45:09 +0200
+
+nagios-trapd (0.2.29) unstable; urgency=medium
+
+  * Last Commit: (2016-05-30 11:33:23 +0200)
+    bb614dea9fa95bbf874d8cba7d34059fd5d1abb9 szn <sznowik@gawex.pl>
+
+ -- Andy Kipp <akipp@cloudant.com>  Mon, 30 May 2016 11:44:45 +0200
+
+nagios-trapd (0.2.29) unstable; urgency=medium
+
+  * Last Commit: (2016-05-30 11:33:23 +0200)
+    bb614dea9fa95bbf874d8cba7d34059fd5d1abb9 szn <sznowik@gawex.pl>
+
+ -- Andy Kipp <akipp@cloudant.com>  Mon, 30 May 2016 11:44:23 +0200
+
+nagios-trapd (0.2.29) unstable; urgency=medium
+
+  * Last Commit: (2016-05-30 11:33:23 +0200)
+    bb614dea9fa95bbf874d8cba7d34059fd5d1abb9 szn <sznowik@gawex.pl>
+
+ -- Andy Kipp <akipp@cloudant.com>  Mon, 30 May 2016 11:42:48 +0200
+
+nagios-trapd (0.2.29) unstable; urgency=medium
+
+  * Last Commit: (2016-05-30 11:33:23 +0200)
+    bb614dea9fa95bbf874d8cba7d34059fd5d1abb9 szn <sznowik@gawex.pl>
+
+ -- Andy Kipp <akipp@cloudant.com>  Mon, 30 May 2016 11:41:47 +0200
+
+nagios-trapd (0.2.12) unstable; urgency=low
 
   * Last Commit: (2013-03-13 13:29:40 -0400)
     46605d76d644b409dd5a4c3c9ae3b856d64f0537 Andy Kipp
@@ -6,7 +69,7 @@ sensu-trapd (0.2.12) unstable; urgency=low
 
  -- Andy Kipp <akipp@cloudant.com>  Wed, 13 Mar 2013 13:30:10 -0400
 
-sensu-trapd (0.2.11) unstable; urgency=low
+nagios-trapd (0.2.11) unstable; urgency=low
 
   * Last Commit: (2013-03-13 12:16:38 -0400)
     4037aea56c1416cb3d107dcd2136f08680dd61b4 Andy Kipp
@@ -14,7 +77,7 @@ sensu-trapd (0.2.11) unstable; urgency=low
 
  -- Andy Kipp <akipp@cloudant.com>  Wed, 13 Mar 2013 12:17:14 -0400
 
-sensu-trapd (0.2.10) unstable; urgency=low
+nagios-trapd (0.2.10) unstable; urgency=low
 
   * Last Commit: (2013-03-12 01:14:34 -0400)
     23fd00b22e266c0d6bbdd477509e5c082df4949b Andy Kipp
@@ -22,7 +85,7 @@ sensu-trapd (0.2.10) unstable; urgency=low
 
  -- Andy Kipp <akipp@cloudant.com>  Tue, 12 Mar 2013 01:14:57 -0400
 
-sensu-trapd (0.2.8) unstable; urgency=low
+nagios-trapd (0.2.8) unstable; urgency=low
 
   * Last Commit: (2013-03-11 19:41:19 -0400)
     296f6587a3a3dead072a748a6a10caa76e130a8d Andy Kipp
@@ -30,7 +93,7 @@ sensu-trapd (0.2.8) unstable; urgency=low
 
  -- Andy Kipp <akipp@cloudant.com>  Mon, 11 Mar 2013 19:42:16 -0400
 
-sensu-trapd (0.2.5) unstable; urgency=low
+nagios-trapd (0.2.5) unstable; urgency=low
 
   * Last Commit: (2013-03-01 13:31:37 -0500)
     66cbbc9c774186a41029586493235dde2d3581cc Andy Kipp
@@ -38,7 +101,7 @@ sensu-trapd (0.2.5) unstable; urgency=low
 
  -- Andy Kipp <akipp@cloudant.com>  Fri, 01 Mar 2013 13:32:09 -0500
 
-sensu-trapd (0.2.4) unstable; urgency=low
+nagios-trapd (0.2.4) unstable; urgency=low
 
   * Last Commit: (2013-03-01 12:40:21 -0500)
     45b77b8d1b71f703d4cd6e5b12c98dc83917991a Andy Kipp
@@ -46,7 +109,7 @@ sensu-trapd (0.2.4) unstable; urgency=low
 
  -- Andy Kipp <akipp@cloudant.com>  Fri, 01 Mar 2013 12:40:52 -0500
 
-sensu-trapd (0.2.2) unstable; urgency=low
+nagios-trapd (0.2.2) unstable; urgency=low
 
   * Last Commit: (2013-03-01 09:12:07 -0500)
     1457dcdec15eed38c37f4cc46629b822b6308539 Andy Kipp
@@ -54,7 +117,7 @@ sensu-trapd (0.2.2) unstable; urgency=low
 
  -- Andy Kipp <akipp@cloudant.com>  Fri, 01 Mar 2013 09:22:45 -0500
 
-sensu-trapd (0.2.2) unstable; urgency=low
+nagios-trapd (0.2.2) unstable; urgency=low
 
   * Last Commit: (2013-03-01 09:12:07 -0500)
     1457dcdec15eed38c37f4cc46629b822b6308539 Andy Kipp
@@ -62,7 +125,7 @@ sensu-trapd (0.2.2) unstable; urgency=low
 
  -- Andy Kipp <akipp@cloudant.com>  Fri, 01 Mar 2013 09:19:47 -0500
 
-sensu-trapd (0.2.2) unstable; urgency=low
+nagios-trapd (0.2.2) unstable; urgency=low
 
   * Last Commit: (2013-03-01 09:12:07 -0500)
     1457dcdec15eed38c37f4cc46629b822b6308539 Andy Kipp
@@ -70,7 +133,7 @@ sensu-trapd (0.2.2) unstable; urgency=low
 
  -- Andy Kipp <akipp@cloudant.com>  Fri, 01 Mar 2013 09:19:11 -0500
 
-sensu-trapd (0.2.2) unstable; urgency=low
+nagios-trapd (0.2.2) unstable; urgency=low
 
   * Last Commit: (2013-03-01 09:12:07 -0500)
     1457dcdec15eed38c37f4cc46629b822b6308539 Andy Kipp
@@ -78,7 +141,7 @@ sensu-trapd (0.2.2) unstable; urgency=low
 
  -- Andy Kipp <akipp@cloudant.com>  Fri, 01 Mar 2013 09:17:20 -0500
 
-sensu-trapd (0.2.2) unstable; urgency=low
+nagios-trapd (0.2.2) unstable; urgency=low
 
   * Last Commit: (2013-03-01 09:12:07 -0500)
     1457dcdec15eed38c37f4cc46629b822b6308539 Andy Kipp
@@ -86,7 +149,7 @@ sensu-trapd (0.2.2) unstable; urgency=low
 
  -- Andy Kipp <akipp@cloudant.com>  Fri, 01 Mar 2013 09:12:23 -0500
 
-sensu-trapd (0.1.0) unstable; urgency=low
+nagios-trapd (0.1.0) unstable; urgency=low
 
   * Initial release. 
 

@@ -1,15 +1,15 @@
 import time
 import simplejson as json
 
-from sensu.snmp.log import log as LOG
-from sensu.snmp.mib import MibResolver
-from sensu.snmp.handler import TrapHandler
-from sensu.snmp.receiver import TrapReceiverThread
-from sensu.snmp.dispatcher import TrapEventDispatcherThread
-from sensu.snmp.util import *
+from nagios.snmp.log import log as LOG
+from nagios.snmp.mib import MibResolver
+from nagios.snmp.handler import TrapHandler
+from nagios.snmp.receiver import TrapReceiverThread
+from nagios.snmp.dispatcher import TrapEventDispatcherThread
+from nagios.snmp.util import *
 
-class SensuTrapServer(object):
 
+class NagiosTrapServer(object):
     def __init__(self, config):
         self._config = config
         self._run = False
@@ -26,14 +26,14 @@ class SensuTrapServer(object):
         # Configure Trap Handlers
         self._trap_handlers = self._parse_trap_handlers(self._config['daemon']['trap_file'])
 
-        LOG.debug("SensuTrapServer: Initialized")
+        LOG.debug("nagiosTrapServer: Initialized")
 
     def _configure_mibs(self):
         self._mibs = MibResolver(self._config['mibs']['paths'], self._config['mibs']['mibs'])
 
     def _parse_trap_handlers(self, trap_file):
         # TODO: Support multiple trap files
-        LOG.debug("SensuTrapServer: Parsing trap handler file: %s" % (trap_file))
+        LOG.debug("nagiosTrapServer: Parsing trap handler file: %s" % trap_file)
         trap_handlers = dict()
         try:
             fh = open(trap_file, 'r')
@@ -42,7 +42,7 @@ class SensuTrapServer(object):
                 # Load TrapHandler
                 trap_handler = self._load_trap_handler(trap_handler_id, trap_handler_config)
                 trap_handlers[trap_handler_id] = trap_handler
-                LOG.debug("SensuTrapServer: Parsed trap handler: %s" % (trap_handler_id))
+                LOG.debug("nagiosTrapServer: Parsed trap handler: %s" % trap_handler_id)
         finally:
             fh.close()
         return trap_handlers
@@ -53,7 +53,7 @@ class SensuTrapServer(object):
         # TODO: handle OIDs as trap types
         trap_type_oid = self._mibs.lookup(trap_type_module, trap_type_symbol)
 
-        #LOG.debug("%s type=%s::%s (%r)" % (trap_handler_id, trap_type_module, trap_type_symbol, trap_type_oid))
+        # LOG.debug("%s type=%s::%s (%r)" % (trap_handler_id, trap_type_module, trap_type_symbol, trap_type_oid))
 
         # Parse trap arguments
         trap_args = dict()
@@ -64,7 +64,7 @@ class SensuTrapServer(object):
                 trap_arg_type_oid = self._mibs.lookup(trap_arg_type_module, trap_arg_type_symbol)
                 trap_args[trap_arg_type_oid] = trap_arg
 
-                #LOG.debug("%s arg=%s type=%s::%s (%r)" % (trap_handler_id,
+                # LOG.debug("%s arg=%s type=%s::%s (%r)" % (trap_handler_id,
                 #                                            trap_arg,
                 #                                            trap_arg_type_module,
                 #                                            trap_arg_type_symbol,
@@ -80,25 +80,25 @@ class SensuTrapServer(object):
 
         # Initialize TrapHandler
         trap_handler = TrapHandler(trap_type_oid,
-                                    trap_args,
-                                    event_name,
-                                    event_output,
-                                    event_handlers,
-                                    event_severity,
-                                    None)
+                                   trap_args,
+                                   event_name,
+                                   event_output,
+                                   event_handlers,
+                                   event_severity,
+                                   None)
         return trap_handler
 
     def _dispatch_trap_event(self, trap_event):
         self._trap_event_dispatcher_thread.dispatch(trap_event)
 
     def _handle_trap(self, trap):
-        LOG.info("SensuTrapServer: Received Trap: %s" % (trap))
+        LOG.info("nagiosTrapServer: Received Trap: %s" % (trap))
 
         # Find TrapHandler for this Trap 
         trap_handler = None
         for trap_handler_id, th in self._trap_handlers.items():
             if th.handles(trap):
-                LOG.info("SensuTrapServer: %s handling trap %r" % (trap_handler_id, trap))
+                LOG.info("nagiosTrapServer: %s handling trap %r" % (trap_handler_id, trap))
                 # Transform Trap
                 trap_event = th.transform(trap)
                 # Dispatch TrapEvent
@@ -118,7 +118,7 @@ class SensuTrapServer(object):
         self._trap_event_dispatcher_thread.stop()
 
     def run(self):
-        LOG.debug("SensuTrapServer: Started")
+        LOG.debug("nagiosTrapServer: Started")
         self._run = True
 
         # Start TrapReceiverThread
@@ -133,4 +133,4 @@ class SensuTrapServer(object):
         # Wait for our threads to stop
         self._trap_receiver_thread.join()
         self._trap_event_dispatcher_thread.join()
-        LOG.debug("SensuTrapServer: Exiting")
+        LOG.debug("nagiosTrapServer: Exiting")

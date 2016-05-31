@@ -3,10 +3,10 @@ import pysnmp.smi.view
 import pysnmp.entity.rfc3413.mibvar
 import pysnmp.proto.rfc1902
 
-from sensu.snmp.log import log
+from nagios.snmp.log import log
+
 
 class MibResolver(object):
-
     DEFAULT_MIB_PATHS = []
     DEFAULT_MIB_LIST = ['SNMPv2-MIB', 'SNMP-COMMUNITY-MIB']
 
@@ -43,13 +43,13 @@ class MibResolver(object):
         log.debug("MibResolver: Loaded MIB: %s" % mib)
 
     def lookup(self, module, symbol):
-        name = ((module,symbol),)
-        oid,suffix = pysnmp.entity.rfc3413.mibvar.mibNameToOid(self._mib_view, name)
+        name = ((module, symbol),)
+        oid, suffix = pysnmp.entity.rfc3413.mibvar.mibNameToOid(self._mib_view, name)
         return pysnmp.proto.rfc1902.ObjectName(oid)
 
     def lookup_oid(self, oid):
         (symbol, module), indices = pysnmp.entity.rfc3413.mibvar.oidToMibName(self._mib_view, oid)
-        return (module, symbol)
+        return module, symbol
 
     def lookup_value(self, module, symbol, value):
         return pysnmp.entity.rfc3413.mibvar.cloneFromMibValue(self._mib_view, module, symbol, value)

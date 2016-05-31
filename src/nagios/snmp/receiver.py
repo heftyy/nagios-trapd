@@ -1,18 +1,16 @@
-import os
-import sys
 import threading
-import pysnmp.entity.engine
+
 import pysnmp.entity.config
+import pysnmp.entity.engine
+import pysnmp.entity.rfc3413.mibvar
 import pysnmp.smi.builder
 import pysnmp.smi.view
-import pysnmp.entity.rfc3413.mibvar
 from pysnmp.carrier.asynsock.dgram import udp
 from pysnmp.entity.rfc3413 import ntfrcv
-from pysnmp.proto.api import v2c
 
-from sensu.snmp.log import log as log
-from sensu.snmp.trap import Trap
-from sensu.snmp.util import *
+from nagios.snmp.log import log as log
+from nagios.snmp.trap import Trap
+from nagios.snmp.util import *
 
 
 class TrapReceiverThread(threading.Thread):
@@ -24,16 +22,15 @@ class TrapReceiverThread(threading.Thread):
 
     def stop(self):
         if self._trap_receiver._snmp_engine.transportDispatcher.jobsArePending():
-            self._trap_receiver._snmp_engine.transportDispatcher.jobFinished(1) 
+            self._trap_receiver._snmp_engine.transportDispatcher.jobFinished(1)
 
     def run(self):
-        log.debug("%s: Started" % (self.name))
+        log.debug("%s: Started" % self.name)
         self._trap_receiver.run()
-        log.debug("%s: Exiting" % (self.name))
+        log.debug("%s: Exiting" % self.name)
 
 
 class TrapReceiver(object):
-
     SNMPV3_AUTH_PROTOCOLS = {"MD5": pysnmp.entity.config.usmHMACMD5AuthProtocol}
     SNMPV3_PRIV_PROTOCOLS = {"DES": pysnmp.entity.config.usmDESPrivProtocol, "none": None}
 
@@ -50,8 +47,8 @@ class TrapReceiver(object):
         # Configure transport UDP over IPv4
         if config['snmp']['transport']['udp']['enabled']:
             self._configure_udp_transport(
-                config['snmp']['transport']['listen_address'], 
-                int(config['snmp']['transport']['listen_port']))
+                    config['snmp']['transport']['listen_address'],
+                    int(config['snmp']['transport']['listen_port']))
 
         # Configure transport TCP over IPv4
         if config['snmp']['transport']['tcp']['enabled']:
@@ -68,23 +65,23 @@ class TrapReceiver(object):
             self._configure_snmp_v3(self._config['snmp']['auth']['version3']['users'])
 
         # configure pysnmp debugging 
-        #from pysnmp import debug
-        #debug.setLogger(debug.Debug('io'))
+        # from pysnmp import debug
+        # debug.setLogger(debug.Debug('io'))
 
         log.debug("TrapReceiver: Initialized")
 
     def _configure_udp_transport(self, listen_address, listen_port):
         pysnmp.entity.config.addSocketTransport(self._snmp_engine, udp.domainName,
-            udp.UdpTransport().openServerMode((listen_address, listen_port)))
+                                                udp.UdpTransport().openServerMode((listen_address, listen_port)))
         log.info("TrapReceiver: Initialized SNMP UDP Transport on %s:%s" % (listen_address, listen_port))
 
     def _configure_tcp_transport(self, listen_address, listen_port):
-        #log.info("TrapReceiver: Initialized SNMP TCP Transport on %s:%s" % (listen_address, listen_port))
+        # log.info("TrapReceiver: Initialized SNMP TCP Transport on %s:%s" % (listen_address, listen_port))
         pass
 
     def _configure_snmp_v2(self, community):
         # v1/2 setup
-        pysnmp.entity.config.addV1System(self._snmp_engine, 'sensu-trapd-agent', community)
+        pysnmp.entity.config.addV1System(self._snmp_engine, 'nagios-trapd-agent', community)
         log.debug("TrapReceiver: Initialized SNMPv1 Auth")
 
     def _configure_snmp_v3(self, users):
@@ -98,18 +95,19 @@ class TrapReceiver(object):
 
             if priv_protocol:
                 pysnmp.entity.config.addV3User(self._snmp_engine,
-                    user,
-                    auth_protocol,
-                    auth['password'],
-                    priv_protocol,
-                    priv['password'])
+                                               user,
+                                               auth_protocol,
+                                               auth['password'],
+                                               priv_protocol,
+                                               priv['password'])
 
-                log.debug("TrapReceiver: Added SNMPv3 user: %s auth: %s, priv: %s" % (user, auth['protocol'], priv['protocol']))
+                log.debug("TrapReceiver: Added SNMPv3 user: %s auth: %s, priv: %s" % (
+                    user, auth['protocol'], priv['protocol']))
             else:
                 pysnmp.entity.config.addV3User(self._snmp_engine,
-                    user,
-                    auth_protocol,
-                    auth['password'])
+                                               user,
+                                               auth_protocol,
+                                               auth['password'])
 
                 log.debug("TrapReceiver: Added SNMPv3 user: %s auth: %s, priv: none" % (user, auth['protocol']))
 
@@ -145,7 +143,11 @@ class TrapReceiver(object):
                 else:
                     # all other values should be converted to mib symbol/modname
                     # and put in the trap_data dict
-                    trap_arg_oid = oid
+
+                    # trap_arg_oid = oid
+                    # For the case the faultIndex was added into the OID, we have to lookup
+                    # the original OID from MIB instead of using the OID in the received packet directly.
+                    trap_arg_oid = self._mibs.lookup(module, symbol)
                     # convert value
                     trap_arg_value = self._mibs.lookup_value(module, symbol, val)
                     trap_args[trap_arg_oid] = trap_arg_value
@@ -168,14 +170,14 @@ class TrapReceiver(object):
             # now that everything has been parsed, trigger the callback
             self._callback(trap)
 
-        except Exception, ex:
+        except Exception as ex:
             log.exception("Error handling SNMP notification")
 
     def run(self):
         # Register SNMP Application at the SNMP engine
         ntfrcv.NotificationReceiver(self._snmp_engine, self._notification_callback)
 
-        self._snmp_engine.transportDispatcher.jobStarted(1) # this job would never finish
+        self._snmp_engine.transportDispatcher.jobStarted(1)  # this job would never finish
 
         # Run I/O dispatcher which would receive queries and send confirmations
         try:

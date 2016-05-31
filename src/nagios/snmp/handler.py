@@ -1,9 +1,7 @@
-from sensu.snmp.event import TrapEvent
-from sensu.snmp.log import log
+from nagios.snmp.event import TrapEvent
 
 
 class TrapHandler(object):
-
     def __init__(self, trap_type, trap_args, event_name, event_output, event_handlers, event_severity, predicates=None):
         if predicates is None:
             predicates = dict()
@@ -49,4 +47,6 @@ class TrapHandler(object):
         return TrapEvent(self._do_substitutions(self.event_name, substitutions),
                          self._do_substitutions(self.event_output, substitutions),
                          self.event_severity,
-                         self.event_handlers)
+                         self.event_handlers,
+                         trap.properties['ipaddress']
+                         )

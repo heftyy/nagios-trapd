@@ -1,13 +1,13 @@
-# sensu-trapd
+# nagios-trapd
 * * *
 
-Sensu Trap Daemon
+nagios Trap Daemon
 
-sensu-trapd is a SNMP trap receiver that translates SNMP traps to Sensu events.
-It is designed to listen for SNMP traps and dispatch Sensu events based on a
+nagios-trapd is a SNMP trap receiver that translates SNMP traps to nagios events.
+It is designed to listen for SNMP traps and dispatch nagios events based on a
 preconfigured set of mappings (see Configuration).
 
-[![Build Status](https://magnum.travis-ci.com/cloudant/sensu-trapd.png?token=HebgXxm76zdWHjBLhZpe)](https://magnum.travis-ci.com/cloudant/sensu-trapd)
+[![Build Status](https://magnum.travis-ci.com/cloudant/nagios-trapd.png?token=HebgXxm76zdWHjBLhZpe)](https://magnum.travis-ci.com/cloudant/nagios-trapd)
 
 # Requirements
 * * *
@@ -17,13 +17,13 @@ pysnmp >= 4.2.4
 # Installation
 * * *
 
-Sensu-trapd can be installed from source using its Makefile:
+nagios-trapd can be installed from source using its Makefile:
 
 ```
 make install
 ```
 
-Sensu-trapd can also be packaged to deb's (and hopefully RPMs at some point):
+nagios-trapd can also be packaged to deb's (and hopefully RPMs at some point):
 
 ```
 make deb
@@ -36,10 +36,10 @@ For more installation information see the Makefile.
 
 ### Converting MIBs for PySNMP
 
-For sensu-trapd to translate a trap, it must have a corresponding MIB defining
-that trap loaded. PySNMP (which sensu-trapd uses as a trap receiver), requires
+For nagios-trapd to translate a trap, it must have a corresponding MIB defining
+that trap loaded. PySNMP (which nagios-trapd uses as a trap receiver), requires
 that MIBs be converted into a special format before being loaded into
-sensu-trapd. Fortunately, PySNMP provides a utility to do this:
+nagios-trapd. Fortunately, PySNMP provides a utility to do this:
 
 Note: Make you have PySNMP installed, and the "build-pysnmp-mib" is in your path.
 
@@ -47,13 +47,13 @@ Note: Make you have PySNMP installed, and the "build-pysnmp-mib" is in your path
 build-pysnmp-mib -o /some/destination/path/CLOUDANT-CLOUSEAU-MIB.py /some/source/path/CLOUDANT-CLOUSEAU-MIB.txt
 ```
 
-These MIBs will be automatically loaded by sensu-trapd if they are put into
-a directory listed in the sensu-trapd config file under the mibs/paths section,
+These MIBs will be automatically loaded by nagios-trapd if they are put into
+a directory listed in the nagios-trapd config file under the mibs/paths section,
 and also in the in the mibs/mibs section (See Example Configuration).
 
 ### Configuring Daemon
 
-Sensu-trapd is configured using the conf/config.json file. Additionally, some
+nagios-trapd is configured using the conf/config.json file. Additionally, some
 configuration can be specified on the command line. See the help for more info.
 
 ### Configuring Traps
@@ -80,13 +80,13 @@ in conf/config.json).
 }
 ```
 
-In the example above, I've configured sensu-trapd to handle the
+In the example above, I've configured nagios-trapd to handle the
 SOME-AWESOME-MIB::someTrapObject trap. This trap has two trap arguments that
 get mapped to names "first" and "second". These mappings can then be used for
-substitutions in the event that it sent to Sensu.
+substitutions in the event that it sent to nagios.
 
 In the event section of the trap configuration, you must specific a check name.
-This will be used by Sensu as the name of the check, so make it meaningful.
+This will be used by nagios as the name of the check, so make it meaningful.
 
 Additionally, you can specify the output of the check, handlers, and severity of
 the event. 
@@ -153,20 +153,20 @@ trap is received.
 ```
 {
     "daemon": {
-        "log_file":     "/var/log/sensu/sensu-trapd.log",
+        "log_file":     "/var/log/nagios/nagios-trapd.log",
         "log_level":    "DEBUG",
-        "user":         "sensu",
-        "group":        "sensu",
-        "trap_file":    "/opt/sensu-trapd/conf/traps.json"
+        "user":         "nagios",
+        "group":        "nagios",
+        "trap_file":    "/opt/nagios-trapd/conf/traps.json"
     },
     "dispatcher": {
         "host":             "localhost",
         "port":             3030,
         "timeout":          5,
-        "events_log":       "/var/log/sensu/sensu-trapd-events.log"
+        "events_log":       "/var/log/nagios/nagios-trapd-events.log"
     },
     "mibs": {
-        "paths": ["/opt/sensu-trapd/conf/mibs"],
+        "paths": ["/opt/nagios-trapd/conf/mibs"],
         "mibs": ["CLOUDANT-REG-MIB",
                  "CLOUDANT-PLATFORM-MIB",
                  "CLOUDANT-DBCORE-MIB",

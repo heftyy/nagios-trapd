@@ -1,21 +1,21 @@
 {
     "daemon": {
-        "log_file":     "/var/log/sensu/sensu-trapd.log",
+        "log_file":     "/var/log/nagios/nagios-trapd.log",
         "log_level":    "INFO",
-        "pid_file":     "/var/run/sensu-trapd.pid",
+        "pid_file":     "/var/run/nagios-trapd.pid",
         "user":         "nobody",
         "group":        "nogroup",
-        "trap_file":    "/opt/sensu-trapd/conf/traps.json"
+        "trap_file":    "/opt/nagios-trapd/conf/traps.json"
     },
     "dispatcher": {
         "host":         "localhost",
         "port":         3030,
         "timeout":      30,
         "backoff":      60,
-        "events_log":    "/var/log/sensu/sensu-trapd-events.log"
+        "events_log":    "/var/log/nagios/nagios-trapd-events.log"
     },
     "mibs": {
-        "paths": ["/opt/sensu-trapd/conf/mibs"],
+        "paths": ["/opt/nagios-trapd/conf/mibs"],
         "mibs":  []
     },
     "snmp": {

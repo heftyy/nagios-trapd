@@ -1,24 +1,24 @@
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:          sensu-trapd
+# Provides:          nagios-trapd
 # Required-Start:    $network $local_fs $remote_fs
 # Required-Stop:     $network $local_fs $remote_fs
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: SNMP Trap Receiver for Sensu
-# Description:       SNMP Trap Receiver for Sensu
+# Short-Description: SNMP Trap Receiver for nagios
+# Description:       SNMP Trap Receiver for nagios
 #                    
 ### END INIT INFO
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DESC=sensu-trapd
-NAME=sensu-trapd
-CONF=/opt/sensu-trapd/conf/config.json
-DAEMON=/opt/sensu-trapd/bin/sensu-trapd
-PIDFILE=/var/run/sensu-trapd.pid
+DESC=nagios-trapd
+NAME=nagios-trapd
+CONF=/opt/nagios-trapd/conf/config.json
+DAEMON=/opt/nagios-trapd/bin/nagios-trapd
+PIDFILE=/var/run/nagios-trapd.pid
 DAEMON_ARGS="-p $PIDFILE -c $CONF"
-SCRIPTNAME=/etc/init.d/sensu-trapd
+SCRIPTNAME=/etc/init.d/nagios-trapd
 
 # Exit if the package is not installed
 [ -x $DAEMON ] || exit 0

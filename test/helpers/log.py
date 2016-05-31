@@ -1,7 +1,7 @@
 import sys
 import logging
 
-log = logging.getLogger('sensu-trapd.tests')
+log = logging.getLogger('nagios-trapd.tests')
 
 def configure_log(log, log_level="DEBUG"):
     # Clear existing log handlers

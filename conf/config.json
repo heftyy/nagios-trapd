@@ -1,67 +1,69 @@
 {
-    "daemon": {
-        "log_file":     "sensu-trapd.log",
-        "log_level":    "INFO",
-        "pid_file":     "sensu-trapd.pid",
-        "user":         "nobody",
-        "group":        "nogroup",
-        "trap_file":    "conf/traps.json"
+  "daemon": {
+    "log_file": "nagios-trapd.log",
+    "log_level": "DEBUG",
+    "pid_file": "nagios-trapd.pid",
+    "user": "szymon",
+    "group": "szymon",
+    "trap_file": "conf/traps.json"
+  },
+  "dispatcher": {
+    "command": "/usr/local/nagios/libexec/eventhandlers/submit_check_result",
+    "events_log": "nagios-trapd-events.log"
+  },
+  "device_requester": {
+    "request_server": "192.168.17.17",
+    "request_port": 9000,
+    "request_url": "/services/devices/get"
+  },
+  "mibs": {
+    "paths": [
+      "conf/mibs"
+    ],
+    "mibs": [
+      "IF-MIB"
+    ]
+  },
+  "snmp": {
+    "transport": {
+      "listen_address": "0.0.0.0",
+      "listen_port": 1620,
+      "udp": {
+        "enabled": true
+      },
+      "tcp": {
+        "enabled": true
+      }
     },
-    "dispatcher": {
-        "host":             "localhost",
-        "port":             3030,
-        "timeout":          5,
-        "events_log":       "sensu-trapd-events.log"
-    },
-    "mibs": {
-        "paths": ["conf/mibs"],
-        "mibs":  ["CLOUDANT-REG-MIB",
-                  "CLOUDANT-PLATFORM-MIB",
-                  "CLOUDANT-DBCORE-MIB",
-                  "CLOUDANT-LOADBALANCER-MIB",
-                  "CLOUDANT-CLOUSEAU-MIB",
-                  "CLOUDANT-METRICS-MIB"]
-    },
-    "snmp": {
-        "transport": {
-            "listen_address":   "0.0.0.0",
-            "listen_port":      1620,
-            "udp": {
-                "enabled": true
+    "auth": {
+      "version2": {
+        "enabled": true,
+        "community": "public"
+      },
+      "version3": {
+        "enabled": true,
+        "users": {
+          "test-user": {
+            "authentication": {
+              "protocol": "MD5",
+              "password": "myAuthSecret"
             },
-            "tcp": {
-                "enabled": true
+            "privacy": {
+              "protocol": "DES",
+              "password": "myPrivSecret"
             }
-        },
-        "auth": {
-            "version2": {
-                "enabled":      true,
-                "community":    "public"
+          },
+          "test-user-nopriv": {
+            "authentication": {
+              "protocol": "MD5",
+              "password": "myAuthSecret"
             },
-            "version3": {
-                "enabled":      true,
-                "users": {
-                    "test-user": {
-                        "authentication": {
-                            "protocol": "MD5",
-                            "password": "myAuthSecret"
-                        },
-                        "privacy": {
-                            "protocol": "DES",
-                            "password": "myPrivSecret"
-                        }
-                    },
-                    "test-user-nopriv": {
-                        "authentication": {
-                            "protocol": "MD5",
-                            "password": "myAuthSecret"
-                        },
-                        "privacy": {
-                            "protocol": "none"
-                        }
-                    }
-                }
+            "privacy": {
+              "protocol": "none"
             }
+          }
         }
+      }
     }
+  }
 }

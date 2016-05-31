@@ -30,16 +30,16 @@ def get_version():
 version = get_version()
 
 setup(
-    name='sensu-trapd',
+    name='nagios-trapd',
     version=version,
-    url='https://github.com/cloudant/sensu-trapd',
+    url='https://github.com/cloudant/nagios-trapd',
     author='Cloudant Inc.',
     author_email='akipp@cloudant.com',
     license='MIT License',
-    description='SNMP Trap Receiver for Sensu',
+    description='SNMP Trap Receiver for nagios',
     package_dir={'': 'src'},
-    packages=['sensu', 'sensu.snmp'],
-    scripts=['src/bin/sensu-trapd'],
+    packages=['nagios', 'nagios.snmp'],
+    scripts=['src/bin/nagios-trapd'],
     data_files=data_files,
     #install_requires=install_requires,
     #test_suite='test.main',

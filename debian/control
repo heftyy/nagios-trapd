@@ -1,16 +1,16 @@
-Source: sensu-trapd
+Source: nagios-trapd
 Section: misc
 Priority: extra
 Maintainer: Andy Kipp <akipp@cloudant.com>
-Homepage: https://github.com/cloudant/sensu-trapd
-Vcs-Git: git://github.com/cloudant/sensu-trapd.git
-Vcs-Browser: https://github.com/cloudant/sensu-trapd
+Homepage: https://github.com/cloudant/nagios-trapd
+Vcs-Git: git://github.com/cloudant/nagios-trapd.git
+Vcs-Browser: https://github.com/cloudant/nagios-trapd
 Build-Depends: debhelper (>= 7), python (>= 2.6), python-support, python-mock
 Standards-Version: 3.9.1
 
-Package: sensu-trapd
+Package: nagios-trapd
 Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}, python (>= 2.6)
-Provides: sensu-snmp
-Replaces: sensu-snmp
-Description: SNMP Trap Receiver for Sensu
+Provides: nagios-snmp
+Replaces: nagios-snmp
+Description: SNMP Trap Receiver for nagios

@@ -1,19 +1,20 @@
 #!/usr/bin/env python
 
-import os
-import sys
-import optparse
-import pwd
 import grp
+import optparse
+import os
+import pwd
 import signal
+import sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../lib')))
 
-from sensu.snmp.config import load_config
-from sensu.snmp.log import log, configure_log
-from sensu.snmp.log import events_log, configure_events_log
-from sensu.snmp.server import SensuTrapServer
+from nagios.snmp.config import load_config
+from nagios.snmp.log import log, configure_log
+from nagios.snmp.log import events_log, configure_events_log
+from nagios.snmp.server import NagiosTrapServer
+
 
 if __name__ == "__main__":
     try:
@@ -52,12 +53,12 @@ if __name__ == "__main__":
 
         # Display Version
         if options.version:
-            print "version %s" % (get_version())
+            print("version %s" % (get_version()))
             sys.exit(0)
 
         # Load Config
         if options.configfile is None:
-            print >> sys.stderr, ("ERROR: Must specify a config file")
+            print >> sys.stderr, "ERROR: Must specify a config file"
             sys.exit(1)
 
         config = load_config(options.configfile)
@@ -73,11 +74,12 @@ if __name__ == "__main__":
         configure_events_log(events_log, config['dispatcher']['events_log'])
 
     # Pass the exit up stream rather then handle it as an general exception
-    except SystemExit, e:
+    except SystemExit as e:
         raise SystemExit
 
-    except Exception, e:
+    except Exception as e:
         import traceback
+
         sys.stderr.write("Unhandled exception: %s\n" % str(e))
         sys.stderr.write("traceback: %s" % traceback.format_exc())
         sys.exit(1)
@@ -91,7 +93,7 @@ if __name__ == "__main__":
 
             # Read existing pid file
             try:
-                pf = file(options.pidfile, 'r')
+                pf = open(options.pidfile, 'r')
                 pid = int(pf.read().strip())
                 pf.close()
             except IOError:
@@ -104,9 +106,9 @@ if __name__ == "__main__":
                     # Pid is not real
                     os.unlink(options.pidfile)
                     pid = None
-                    print >> sys.stderr, ("WARN: Bogus pid file was found. I deleted it.")
+                    print >> sys.stderr, "WARN: Bogus pid file was found. I deleted it."
                 else:
-                    print >> sys.stderr, ("ERROR: Pidfile exists. Server already running?")
+                    print >> sys.stderr, "ERROR: Pidfile exists. Server already running?"
                     sys.exit(1)
 
             # Get final GIDs
@@ -120,15 +122,15 @@ if __name__ == "__main__":
                 # Write pid file
                 pid = str(os.getpid())
                 try:
-                    pf = file(options.pidfile, 'w+')
-                except IOError, e:
-                    print >> sys.stderr, "Failed to write PID file: %s" % (e)
+                    pf = open(options.pidfile, 'w+')
+                except IOError as e:
+                    print >> sys.stderr, "Failed to write PID file: %s" % e
                     sys.exit(1)
                 pf.write("%s\n" % pid)
                 pf.close()
                 os.chown(options.pidfile, uid, gid)
                 # Log
-                log.debug("Wrote First PID file: %s" % (options.pidfile))
+                log.debug("Wrote First PID file: %s" % options.pidfile)
 
             # Switch user to specified user/group if required
             try:
@@ -139,8 +141,8 @@ if __name__ == "__main__":
                 if uid != -1 and os.getuid() != uid:
                     # Set UID
                     os.setuid(uid)
-            except Exception, e:
-                print >> sys.stderr, "ERROR: Failed to set UID/GID. %s" % (e)
+            except Exception as e:
+                print >> sys.stderr, "ERROR: Failed to set UID/GID. %s" % e
                 sys.exit(1)
 
             # Log
@@ -159,8 +161,8 @@ if __name__ == "__main__":
                 if pid > 0:
                     # Exit first paren
                     sys.exit(0)
-            except OSError, e:
-                print >> sys.stderr, "Failed to fork process." % (e)
+            except OSError as e:
+                print >> sys.stderr, "Failed to fork process." % e
                 sys.exit(1)
             # Decouple from parent environmen
             os.setsid()
@@ -171,8 +173,8 @@ if __name__ == "__main__":
                 if pid > 0:
                     # Exit second paren
                     sys.exit(0)
-            except OSError, e:
-                print >> sys.stderr, "Failed to fork process." % (e)
+            except OSError as e:
+                print >> sys.stderr, "Failed to fork process." % e
                 sys.exit(1)
 
             # Close file descriptors so that we can detach
@@ -188,36 +190,39 @@ if __name__ == "__main__":
                 # Write pid file
                 pid = str(os.getpid())
                 try:
-                    pf = file(options.pidfile, 'w+')
-                except IOError, e:
+                    pf = open(options.pidfile, 'w+')
+                except IOError as e:
                     log.error("Failed to write child PID file: %s" % (e))
                     sys.exit(1)
                 pf.write("%s\n" % pid)
                 pf.close()
                 # Log
-                log.debug("Wrote child PID file: %s" % (options.pidfile))
+                log.debug("Wrote child PID file: %s" % options.pidfile)
 
         else:
             log.info("Foreground mode enabled, skipping fork.")
 
     # Pass the exit up stream rather then handle it as an general exception
-    except SystemExit, e:
+    except SystemExit as e:
         raise SystemExit
 
-    except Exception, e:
+    except Exception as e:
         import traceback
+
         sys.stderr.write("Unhandled exception: %s" % str(e))
         sys.stderr.write("traceback: %s" % traceback.format_exc())
         sys.exit(1)
 
-    # Initialize Sensu Trap Server
-    server = SensuTrapServer(config)
+    # Initialize nagios Trap Server
+    server = NagiosTrapServer(config)
+
 
     def sigint_handler(signum, frame):
         # Log
         log.info("Signal Received: %d" % (signum))
         # Stop Server
         server.stop()
+
 
     # Set the signal handlers
     signal.signal(signal.SIGINT, sigint_handler)
