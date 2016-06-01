@@ -7,7 +7,7 @@ nagios-trapd is a SNMP trap receiver that translates SNMP traps to nagios events
 It is designed to listen for SNMP traps and dispatch nagios events based on a
 preconfigured set of mappings (see Configuration).
 
-[![Build Status](https://magnum.travis-ci.com/cloudant/nagios-trapd.png?token=HebgXxm76zdWHjBLhZpe)](https://magnum.travis-ci.com/cloudant/nagios-trapd)
+[![Build Status](https://travis-ci.org/heftyy/nagios-trapd.svg?branch=master)](https://travis-ci.org/heftyy/nagios-trapd)
 
 # Requirements
 * * *

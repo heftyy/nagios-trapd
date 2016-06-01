@@ -32,7 +32,7 @@ version = get_version()
 setup(
     name='nagios-trapd',
     version=version,
-    url='https://github.com/cloudant/nagios-trapd',
+    url='https://github.com/heftyy/nagios-trapd',
     author='Cloudant Inc.',
     author_email='akipp@cloudant.com',
     license='MIT License',
@@ -41,6 +41,6 @@ setup(
     packages=['nagios', 'nagios.snmp'],
     scripts=['src/bin/nagios-trapd'],
     data_files=data_files,
-    #install_requires=install_requires,
-    #test_suite='test.main',
+    # install_requires=['pysnmp', 'requests', 'simplejson'],
+    # test_suite='test.main',
 )

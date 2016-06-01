@@ -15,7 +15,7 @@ all:
 	@echo "make clean    - Get rid of scratch and byte files"
 
 test:
-	./test.py
+	python tests/test_mib.py && python tests/test_receiver.py
 
 sdist: version
 	./setup.py sdist --prune

@@ -1,6 +1,6 @@
 language: python
 python:
-  - "3.3"
+  - "2.7"
 
 # install required packages
 before_install:
@@ -8,13 +8,16 @@ before_install:
  - sudo apt-get install -qq python-support
  - sudo apt-get install -qq python-mock
 
-
 # install dependencies
 install:
-  - "pip install -r requirements.txt"
+  - pip install -r requirements.txt
 
 # run 
-script: make deb
+script:
+  - make version
+  - cat version.txt
+  - make test
+  - make deb
 
 # setup notifications
 notifications:

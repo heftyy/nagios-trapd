@@ -3,6 +3,8 @@ import unittest
 
 import sys
 
+from pysnmp.smi.error import NoSuchObjectError
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
 from nagios.snmp.mib import MibResolver
@@ -25,15 +27,15 @@ class MibResolverTestCase(unittest.TestCase):
 
     def test_lookup(self):
         snmp_trap_oid = (1, 3, 6, 1, 6, 3, 1, 1, 4, 1)
-        self.assertEquals(self.mibs.lookup('SNMPv2-MIB', 'snmpTrapOID'), snmp_trap_oid)
+        self.assertEqual(self.mibs.lookup('SNMPv2-MIB', 'snmpTrapOID'), snmp_trap_oid)
 
     def test_lookup_oid(self):
         snmp_trap_oid = (1, 3, 6, 1, 6, 3, 1, 1, 4, 1)
-        self.assertEquals(self.mibs.lookup_oid(snmp_trap_oid), ('SNMPv2-MIB', 'snmpTrapOID'))
+        self.assertEqual(self.mibs.lookup_oid(snmp_trap_oid), ('SNMPv2-MIB', 'snmpTrapOID'))
 
     def test_lookup_oid_unknown(self):
         unknown_oid = (1, 2, 3, 4, 5, 6)
-        # self.assertRaises(NoSuchObjectError, self.mibs.lookup_oid, unknown_oid)
+        self.assertRaises(NoSuchObjectError, self.mibs.lookup_oid, unknown_oid)
 
 
 if __name__ == "__main__":

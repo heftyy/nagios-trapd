@@ -1,3 +1,17 @@
+nagios-trapd (0.2.58) unstable; urgency=medium
+
+  * Last Commit: (2016-06-01 15:00:53 +0200)
+    01693fc6406d806643014b44290d4306a01375e8 szn <sznowik@gawex.pl>
+
+ -- Andy Kipp <akipp@cloudant.com>  Wed, 01 Jun 2016 15:05:05 +0200
+
+nagios-trapd (0.2.50) unstable; urgency=medium
+
+  * Last Commit: (2016-06-01 14:12:09 +0200)
+    ad8cd307809cfe508112f43e8d6d058a7c17ca9f szn <sznowik@gawex.pl>
+
+ -- Andy Kipp <akipp@cloudant.com>  Wed, 01 Jun 2016 14:20:02 +0200
+
 nagios-trapd (0.2.29) unstable; urgency=medium
 
   * Last Commit: (2016-05-30 11:33:23 +0200)
