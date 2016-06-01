@@ -90,7 +90,7 @@ class TrapEventDispatcher(object):
         for handler in event.handlers:
             ret = call([command, hostname, handler, str(event.status), event.output])
             print(event.to_json())
-            log.debug('TrapEventDispatcher: Message has been sent to nagios.')
+            log.debug('TrapEventDispatcher: Message has been sent to nagios (%s).' % hostname)
             success = ret == 0
 
         return success
