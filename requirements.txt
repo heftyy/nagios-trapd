@@ -1,4 +1,4 @@
-pyasn1==0.1.6
+pyasn1==0.1.9
 pycrypto==2.6
 pysnmp==4.3.2
 simplejson==3.8.2
