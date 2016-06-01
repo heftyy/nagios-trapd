@@ -14,7 +14,7 @@
     },
     "event": {
       "name": "{hostname} link down",
-      "output": "{oid}",
+      "output": "interface {index} down",
       "handlers": [
         "snmp_trap"
       ],
@@ -36,7 +36,7 @@
     },
     "event": {
       "name": "{hostname} link up",
-      "output": "{oid}",
+      "output": "interface {index} up",
       "handlers": [
         "snmp_trap"
       ],

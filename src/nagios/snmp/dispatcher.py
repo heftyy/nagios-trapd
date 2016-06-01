@@ -84,8 +84,14 @@ class TrapEventDispatcher(object):
             log.error('TrapEventDispatcher: Dispatcher command does not exist.')
             return False
 
+        success = len(event.handlers) > 0
+
         for handler in event.handlers:
             call([command, hostname, handler, event.status, event.output])
             print(event.to_json())
+            log.debug('TrapEventDispatcher: Message has been sent to nagios.')
+            success = False
+
+        return success
 
 
