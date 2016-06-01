@@ -1,6 +1,11 @@
 import logging
+import os
 import time
 import unittest
+
+import sys
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
 from nagios.snmp.mib import MibResolver
 from nagios.snmp.receiver import TrapReceiverThread
