@@ -1,6 +1,7 @@
 import os
 import threading
 import time
+import traceback
 from collections import deque
 from subprocess import call
 
@@ -44,8 +45,8 @@ class TrapEventDispatcherThread(threading.Thread):
                     # attempt to dispatch event
                     try:
                         success = self._trap_event_dispatcher.dispatch(event)
-                    except Exception as e:
-                        print(e)
+                    except Exception as err:
+                        print(traceback.format_exc())
 
                     if not success:
                         # dispatch failed. put the event back on the queue
