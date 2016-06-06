@@ -88,7 +88,7 @@ class TrapEventDispatcher(object):
         success = len(event.handlers) > 0
 
         for handler in event.handlers:
-            ret = call([command, hostname, handler, str(event.status), '\'' + event.output + '\''])
+            ret = call([command, hostname, handler, str(event.status), '\n\'' + event.output + '\''])
             log.debug('TrapEventDispatcher: command called %s %s %s %s %s' % (command,
                                                                               hostname,
                                                                               handler,
