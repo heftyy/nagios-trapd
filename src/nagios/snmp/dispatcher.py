@@ -1,6 +1,7 @@
 import os
 import threading
 import time
+import json
 import traceback
 from collections import deque
 from subprocess import call
@@ -88,12 +89,20 @@ class TrapEventDispatcher(object):
         success = len(event.handlers) > 0
 
         for handler in event.handlers:
-            ret = call([command, hostname, handler, str(event.status), '\"' + event.output + '\"'])
+            output_dict = {
+                'nagios_status': event.status,
+                'output': event.output,
+                'type': event.name
+            }
+
+            output = '!' + json.dumps(output_dict)
+
+            ret = call([command, hostname, handler, str(event.status), output])
             log.debug('TrapEventDispatcher: command called %s %s %s %s %s' % (command,
                                                                               hostname,
                                                                               handler,
                                                                               str(event.status),
-                                                                              event.output))
+                                                                              output))
             print(event.to_json())
             log.debug('TrapEventDispatcher: Message has been sent to nagios (%s).' % hostname)
             success = ret == 0

@@ -3,8 +3,8 @@
     "log_file": "nagios-trapd.log",
     "log_level": "DEBUG",
     "pid_file": "nagios-trapd.pid",
-    "user": "szymon",
-    "group": "szymon",
+    "user": "nagios",
+    "group": "nagios",
     "trap_file": "conf/traps.json"
   },
   "dispatcher": {
