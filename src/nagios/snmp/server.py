@@ -92,7 +92,7 @@ class NagiosTrapServer(object):
         self._trap_event_dispatcher_thread.dispatch(trap_event)
 
     def _handle_trap(self, trap):
-        LOG.info("nagiosTrapServer: Received Trap: %s" % (trap))
+        LOG.info("nagiosTrapServer: Received Trap: %s" % trap)
 
         # Find TrapHandler for this Trap 
         trap_handler = None
@@ -104,7 +104,7 @@ class NagiosTrapServer(object):
                 # Dispatch TrapEvent
                 self._dispatch_trap_event(trap_event)
                 return
-        LOG.warning("No trap handler found for %r" % (trap))
+        LOG.warning("No trap handler found for %r" % trap)
 
     def stop(self):
         if not self._run:

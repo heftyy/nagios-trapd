@@ -1,10 +1,13 @@
 import os
+import re
 import threading
 import time
 import json
 import traceback
 from collections import deque
 from subprocess import call
+
+from pysnmp.proto.rfc1902 import ObjectName
 
 from nagios.snmp.log import events_log
 from nagios.snmp.log import log
@@ -79,6 +82,18 @@ class TrapEventDispatcher(object):
 
     def dispatch(self, event):
         hostname = self._device_requester.get_nagios_hostname(event.ipaddr)
+        traps = self._device_requester.get_trap_settings(event.ipaddr)
+
+        trap_valid = False
+        for trap in traps:
+            if event.name == trap['name']:
+                oid = ObjectName(trap['oid'])
+                if str(event.arguments[oid]) == str(trap['value']):
+                    trap_valid = True
+                    break
+
+        if not trap_valid:
+            return
 
         command = self._config['dispatcher']['command']
         command_exists = os.path.isfile(command)
@@ -95,14 +110,16 @@ class TrapEventDispatcher(object):
                 'type': event.name
             }
 
-            output = '!' + json.dumps(output_dict)
+            output = re.escape('!' + json.dumps(output_dict))
 
-            ret = call([command, hostname, handler, str(event.status), output])
             log.debug('TrapEventDispatcher: command called %s %s %s %s %s' % (command,
                                                                               hostname,
                                                                               handler,
                                                                               str(event.status),
                                                                               output))
+
+            ret = call([command, hostname, handler, str(event.status), output])
+
             print(event.to_json())
             log.debug('TrapEventDispatcher: Message has been sent to nagios (%s).' % hostname)
             success = ret == 0

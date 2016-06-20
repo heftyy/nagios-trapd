@@ -9,6 +9,7 @@
     "event": {
       "name": "link-down",
       "output": "interface {index} down",
+      "primary_arg": "{index}",
       "handlers": ["snmp_trap"],
       "severity": "CRITICAL"
     }
@@ -23,6 +24,7 @@
     "event": {
       "name": "link-up",
       "output": "interface {index} up",
+      "primary_arg": "{index}",
       "handlers": ["snmp_trap"],
       "severity": "OK"
     }

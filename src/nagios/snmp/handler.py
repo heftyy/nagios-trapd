@@ -48,5 +48,6 @@ class TrapHandler(object):
                          self._do_substitutions(self.event_output, substitutions),
                          self.event_severity,
                          self.event_handlers,
-                         trap.properties['ipaddress']
+                         trap.properties['ipaddress'],
+                         trap.arguments
                          )

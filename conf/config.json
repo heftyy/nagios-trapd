@@ -12,9 +12,8 @@
     "events_log": "nagios-trapd-events.log"
   },
   "device_requester": {
-    "request_server": "192.168.17.17",
-    "request_port": 9000,
-    "request_url": "/services/devices/get"
+    "device_request_url": "192.168.17.17:9000/services/devices/get",
+    "nagios_settings_settings": "192.168.17.17:9000/services/devices/nagios/settings/get"
   },
   "mibs": {
     "paths": [
