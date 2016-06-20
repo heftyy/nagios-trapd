@@ -83,7 +83,7 @@ class NagiosTrapServer(object):
         trap_handler = TrapHandler(trap_type_oid,
                                    trap_args,
                                    event_name,
-                                   event_name,
+                                   event_type,
                                    event_output,
                                    event_handlers,
                                    event_severity,
