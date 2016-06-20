@@ -93,6 +93,7 @@ class TrapEventDispatcher(object):
                     break
 
         if not trap_valid:
+            log.error('TrapEventDispatcher: Trap is not valid %s' % event.to_json())
             return
 
         command = self._config['dispatcher']['command']
