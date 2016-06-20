@@ -72,6 +72,7 @@ class NagiosTrapServer(object):
 
         # Parse event info
         event_name = trap_handler_config['event']['name']
+        event_type = trap_handler_config['event']['type']
         event_output = trap_handler_config['event']['output']
         event_handlers = trap_handler_config['event']['handlers']
         event_severity = parse_event_severity(trap_handler_config['event']['severity'])
@@ -81,6 +82,7 @@ class NagiosTrapServer(object):
         # Initialize TrapHandler
         trap_handler = TrapHandler(trap_type_oid,
                                    trap_args,
+                                   event_name,
                                    event_name,
                                    event_output,
                                    event_handlers,

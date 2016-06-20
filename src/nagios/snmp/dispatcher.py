@@ -108,7 +108,7 @@ class TrapEventDispatcher(object):
             output_dict = {
                 'nagios_status': event.status,
                 'output': event.output,
-                'type': event.name
+                'type': event.type
             }
 
             output = '!' + json.dumps(output_dict)

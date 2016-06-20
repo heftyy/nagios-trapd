@@ -8,6 +8,7 @@
     },
     "event": {
       "name": "link-down",
+      "type": "link-trap",
       "output": "interface {index} down",
       "primary_arg": "{index}",
       "handlers": ["snmp_trap"],
@@ -23,6 +24,7 @@
     },
     "event": {
       "name": "link-up",
+      "type": "link-trap",
       "output": "interface {index} up",
       "primary_arg": "{index}",
       "handlers": ["snmp_trap"],

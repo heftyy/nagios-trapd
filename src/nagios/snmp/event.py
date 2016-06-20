@@ -5,8 +5,9 @@ class TrapEvent(object):
 
     EVENT_SEVERITY = {"CRITICAL": 2, "WARNING": 1, "OK": 0}
 
-    def __init__(self, name, output, status, handlers, ipaddr, arguments):
+    def __init__(self, name, event_type, output, status, handlers, ipaddr, arguments):
         self.name = name
+        self.type = event_type
         self.output = output
         self.status = status
         self.handlers = handlers
@@ -15,6 +16,7 @@ class TrapEvent(object):
 
     def to_json(self):
         return json.dumps({'name': self.name,
+                           'type': self.type,
                            'output': self.output,
                            'status': self.status,
                            'handlers': self.handlers,

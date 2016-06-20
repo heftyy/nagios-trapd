@@ -2,13 +2,14 @@ from nagios.snmp.event import TrapEvent
 
 
 class TrapHandler(object):
-    def __init__(self, trap_type, trap_args, event_name, event_output, event_handlers, event_severity, predicates=None):
+    def __init__(self, trap_type, trap_args, event_name, event_type, event_output, event_handlers, event_severity, predicates=None):
         if predicates is None:
             predicates = dict()
 
         self.trap_type = trap_type
         self.trap_args = trap_args
         self.event_name = event_name
+        self.event_type = event_type
         self.event_output = event_output
         self.event_handlers = event_handlers
         self.event_severity = event_severity
@@ -45,6 +46,7 @@ class TrapHandler(object):
     def transform(self, trap):
         substitutions = self._build_substitutions(trap)
         return TrapEvent(self._do_substitutions(self.event_name, substitutions),
+                         self._do_substitutions(self.event_type, substitutions),
                          self._do_substitutions(self.event_output, substitutions),
                          self.event_severity,
                          self.event_handlers,
