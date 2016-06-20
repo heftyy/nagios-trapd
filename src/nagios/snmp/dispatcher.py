@@ -111,7 +111,7 @@ class TrapEventDispatcher(object):
                 'type': event.name
             }
 
-            output = re.escape('!' + json.dumps(output_dict))
+            output = '!' + json.dumps(output_dict)
 
             log.debug('TrapEventDispatcher: command called %s %s %s %s %s' % (command,
                                                                               hostname,
