@@ -87,8 +87,12 @@ class TrapEventDispatcher(object):
         trap_valid = False
         for trap in traps:
             if event.name == trap['name']:
-                oid = ObjectName(trap['oid'])
-                if str(event.arguments[oid]) == str(trap['value']):
+                if 'oid' in trap:
+                    oid = ObjectName(trap['oid'])
+                    if str(event.arguments[oid]) == str(trap['value']):
+                        trap_valid = True
+                        break
+                else:
                     trap_valid = True
                     break
 
